@@ -8,30 +8,30 @@ html,body{
     padding:0;
     overflow:hidden;
     background:black;
-}
-img{
     width:100%;
     height:100%;
-    object-fit:cover;
+}
+#frame{
+    width:100%;
+    height:100%;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover; /* ← これが最強 */
 }
 </style>
 </head>
 <body>
+<div id="frame"></div>
+
 <script>
-// URLパラメータから ?src= を取得
 const params = new URLSearchParams(window.location.search);
-const src = params.get("src");
+let src = params.get("src");
 
-// img 要素を作成
-const img = document.createElement("img");
-
-// Dropbox の ?dl=0 を ?raw=1 に自動変換
+// Dropbox ?dl=0 → ?raw=1
 if(src){
-    img.src = src.replace("?dl=0", "?raw=1");
+    src = src.replace("?dl=0", "?raw=1");
+    document.getElementById("frame").style.backgroundImage = `url('${src}')`;
 }
-
-// body に追加
-document.body.appendChild(img);
 </script>
 </body>
 </html>
